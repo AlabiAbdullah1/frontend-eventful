@@ -1,0 +1,34 @@
+.event_container {
+  width: 100%;
+  user-select: none;
+}
+
+.header {
+  color: var(--color-dark--1);
+  text-align: center;
+}
+
+.container {
+  border: 1px solid rgb(120, 235, 235);
+  box-shadow: 0 1px 2px var(--color-brand--2);
+  box-sizing: content-box;
+  width: 50%;
+  margin: 0 auto;
+  color: black;
+  height: fit-content;
+  cursor: pointer;
+  text-decoration: none;
+
+  h4 {
+    font-size: 15px;
+    font-weight: 200;
+  }
+}
+
+.container:hover {
+  border: 1px solid #f08080;
+}
+
+.container :active {
+  border: #ffa500;
+}
