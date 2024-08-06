@@ -33,7 +33,7 @@ const CreatorLogin = () => {
       navigate("/creator-dashboard");
     },
     onError: (error) => {
-      toast.error("Username or password incorrect");
+      toast.error("username or password incorrect");
       console.error("Login error", error);
     },
   });
