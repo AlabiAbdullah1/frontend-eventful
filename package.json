@@ -20,7 +20,8 @@
     "react-paystack": "^5.0.0",
     "react-router-dom": "^6.25.1",
     "react-share": "^5.1.0",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
