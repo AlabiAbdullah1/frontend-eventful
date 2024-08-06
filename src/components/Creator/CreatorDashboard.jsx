@@ -33,9 +33,14 @@ const CreatorDashboard = () => {
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>My Events</h2>
-        <Link to="/user/analytic">
-          <Button>Your EventAnalysis</Button>
-        </Link>
+        <div>
+          <Link to="/user/analytic">
+            <Button className="me-2">Your EventAnalysis</Button>
+          </Link>
+          <Link to="/">
+            <Button>Go to the homepage</Button>
+          </Link>
+        </div>
       </div>
       {error && (
         <h5>

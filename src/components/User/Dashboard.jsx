@@ -29,10 +29,16 @@ const Dashboard = () => {
       <div className="container mt-5">
         <ToastContainer />
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h1>LIST OF EVENTS</h1>
-          <Link to="/user/events">
-            <Button>Your Events</Button>
-          </Link>
+          <h2 className="text-center">LIST OF ALL AVAILABLE EVENTS</h2>
+          <div>
+            <Link to="/user/events">
+              <Button className="me-2">Your Events</Button>
+            </Link>
+
+            <Link to="/">
+              <Button>Go to the homepage</Button>
+            </Link>
+          </div>
         </div>
         {events && (
           <div className="row">
