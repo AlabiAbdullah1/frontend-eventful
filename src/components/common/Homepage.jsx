@@ -1,18 +1,19 @@
 import { Link } from "react-router-dom";
-import styles from "./Homepage.module.css";
 import PageNav from "./PageNav";
 
 export default function Homepage() {
   return (
-    <main className={styles.homepage}>
-      <PageNav />
-      <section>
-        <h1>
+    <main className="d-flex flex-column justify-content-center align-items-center vh-100 bg-dark text-white">
+      <div className="position-absolute top-0 w-100">
+        <PageNav />
+      </div>
+      <section className="text-center p-5">
+        <h1 className="display-1">
           WELCOME TO EVENTFUL
           <br />
           Your gateway to Exciting Events
         </h1>
-        <h2>
+        <h2 className="lead my-4">
           Are you tired of missing out on the hottest events in town? Look no
           further! Eventful is your one-stop destination for discovering and
           purchasing tickets to the most thrilling events around. Whether you’re
@@ -21,7 +22,10 @@ export default function Homepage() {
           your event needs.
         </h2>
 
-        <Link to="/eventee-login" className="cta">
+        <Link
+          to="/eventee-login"
+          className="btn btn-primary btn-lg text-decoration-none"
+        >
           Buy Your Tickets now!
         </Link>
       </section>

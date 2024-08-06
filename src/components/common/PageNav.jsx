@@ -1,27 +1,30 @@
 import { Link, NavLink } from "react-router-dom";
-import styles from "./PageNav.module.css";
 
 export default function PageNav() {
   return (
-    <nav className={styles.nav}>
-      <Link to="/">
-        <h1>EVENTFUL</h1>
+    <nav className="d-flex align-items-center justify-content-between p-3 bg-dark">
+      <Link to="/" className="text-decoration-none">
+        <h1 className="text-primary">EVENTFUL</h1>
       </Link>
 
-      <ul>
-        <li>
-          <NavLink to="/creator-signup">Signup as Creator</NavLink>
+      <ul className="nav">
+        <li className="nav-item">
+          <NavLink to="/creator-signup" className="nav-link">
+            Signup as Creator
+          </NavLink>
         </li>
-        <li>
-          <NavLink to="/eventee-signup">Signup as Eventee</NavLink>
+        <li className="nav-item">
+          <NavLink to="/eventee-signup" className="nav-link">
+            Signup as Eventee
+          </NavLink>
         </li>
-        <li>
-          <NavLink to="/creator-login" className={styles.ctaLink}>
+        <li className="nav-item">
+          <NavLink to="/creator-login" className="btn btn-primary">
             Creator Login
           </NavLink>
         </li>
-        <li>
-          <NavLink to="/Eventee-login" className={styles.ctaLink}>
+        <li className="nav-item">
+          <NavLink to="/eventee-login" className="btn btn-primary">
             Eventee Login
           </NavLink>
         </li>

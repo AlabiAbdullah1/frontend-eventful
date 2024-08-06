@@ -1,4 +1,3 @@
-import styles from "./Login.module.css";
 import PageNav from "../common/PageNav";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -34,11 +33,10 @@ export default function EventeeSignup() {
     },
     onSuccess: (requestData) => {
       queryClient.setQueryData("creator", requestData);
-      toast.success("Account created successfully");
+      toast.success("Eventee's account created successfully!");
       navigate("/eventee-login");
     },
     onError: (error) => {
-      // toast.error(error.message || "Signup failed");
       console.error("Signup failed:", error.message);
     },
   });
@@ -55,109 +53,134 @@ export default function EventeeSignup() {
   };
 
   if (mutation.isLoading) return <Spinner />;
-  // if (mutation.isError) return <div>Error during signup...</div>;
 
   return (
-    <div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <Formik
-        initialValues={{
-          name: "",
-          email: "",
-          password: "",
-          role: "user",
-          confirmPassword: "",
-        }}
-        validationSchema={signupSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <main className={styles.login}>
-            <PageNav />
-            <Form className={styles.form}>
-              <div className={styles.row}>
-                <label htmlFor="name">Name</label>
-                <Field type="text" id="name" name="name" />
-                <ErrorMessage
-                  name="name"
-                  component="p"
-                  className={styles.error}
-                  style={{ color: "red", fontSize: "12px" }}
-                />
+    <>
+      <PageNav />
+      <div className="bg-dark text-white vh-100 d-flex justify-content-center align-items-center">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <Formik
+          initialValues={{
+            name: "",
+            email: "",
+            password: "",
+            role: "user",
+            confirmPassword: "",
+          }}
+          validationSchema={signupSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <main className="container">
+              <div className="card p-4">
+                <Form>
+                  <div className="mb-3">
+                    <label htmlFor="name" className="form-label">
+                      Name
+                    </label>
+                    <Field
+                      type="text"
+                      id="name"
+                      name="name"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="name"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="email" className="form-label">
+                      Email address
+                    </label>
+                    <Field
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="email"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="role" className="form-label">
+                      Role
+                    </label>
+                    <Field
+                      type="text"
+                      id="role"
+                      name="role"
+                      value="Eventee"
+                      readOnly
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="role"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="password" className="form-label">
+                      Password
+                    </label>
+                    <Field
+                      type="password"
+                      id="password"
+                      name="password"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="password"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="confirmPassword" className="form-label">
+                      Confirm Password
+                    </label>
+                    <Field
+                      type="password"
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      className="form-control"
+                    />
+                    <ErrorMessage
+                      name="confirmPassword"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </div>
+                  <div>
+                    <button
+                      className="btn btn-primary"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Signup
+                    </button>
+                  </div>
+                </Form>
               </div>
-              <div className={styles.row}>
-                <label htmlFor="email">Email address</label>
-                <Field type="email" id="email" name="email" />
-                <ErrorMessage
-                  name="email"
-                  component="p"
-                  className={styles.error}
-                  style={{ color: "red", fontSize: "12px" }}
-                />
-              </div>
-              <div className={styles.row}>
-                <label htmlFor="role">Role</label>
-                <Field
-                  type="text"
-                  id="role"
-                  name="role"
-                  value="Eventee"
-                  readOnly
-                />
-                <ErrorMessage
-                  name="role"
-                  component="p"
-                  className={styles.error}
-                  style={{ color: "red", fontSize: "12px" }}
-                />
-              </div>
-              <div className={styles.row}>
-                <label htmlFor="password">Password</label>
-                <Field type="password" id="password" name="password" />
-                <ErrorMessage
-                  name="password"
-                  component="p"
-                  className={styles.error}
-                  style={{ color: "red", fontSize: "12px" }}
-                />
-              </div>
-              <div className={styles.row}>
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <Field
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                />
-                <ErrorMessage
-                  name="confirmPassword"
-                  component="p"
-                  className={styles.error}
-                  style={{ color: "red", fontSize: "12px" }}
-                />
-              </div>
-              <div>
-                <button
-                  className={styles.btnsubmit}
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  Signup
-                </button>
-              </div>
-            </Form>
-          </main>
-        )}
-      </Formik>
-    </div>
+            </main>
+          )}
+        </Formik>
+      </div>
+    </>
   );
 }

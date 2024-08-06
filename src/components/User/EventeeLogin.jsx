@@ -1,4 +1,3 @@
-import styles from "./Login.module.css";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -7,6 +6,7 @@ import * as Yup from "yup";
 import Spinner from "../common/Spinner";
 import PageNav from "../common/PageNav";
 import { eventeeLogin } from "../../api/axios";
+import "react-toastify/dist/ReactToastify.css";
 
 // Define the validation schema outside the component to avoid re-creation on each render
 const loginSchema = Yup.object().shape({
@@ -31,7 +31,6 @@ function EventeeLogin() {
       navigate("/dashboard");
     },
     onError: (error) => {
-      // toast.error(error.response?.data?.message || error.message);
       toast.error("username or password incorrect");
       console.error("Login error", error);
     },
@@ -62,25 +61,61 @@ function EventeeLogin() {
         validationSchema={loginSchema}
         onSubmit={handleLogin}
       >
-        <main className={styles.login}>
-          <Form className={styles.form}>
-            <div className={styles.row}>
-              <label htmlFor="email">Email address</label>
-              <Field type="email" name="email" id="email" />
-              <ErrorMessage name="email" component="p" />
+        {({ isSubmitting }) => (
+          <main className="container my-5">
+            <div className="row justify-content-center">
+              <div className="col-md-6">
+                <div className="card bg-light text-dark">
+                  <div className="card-body">
+                    <Form>
+                      <div className="mb-3">
+                        <label htmlFor="email" className="form-label">
+                          Email address
+                        </label>
+                        <Field
+                          type="email"
+                          name="email"
+                          id="email"
+                          className="form-control"
+                        />
+                        <ErrorMessage
+                          name="email"
+                          component="div"
+                          className="text-danger"
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="password" className="form-label">
+                          Password
+                        </label>
+                        <Field
+                          type="password"
+                          name="password"
+                          id="password"
+                          className="form-control"
+                        />
+                        <ErrorMessage
+                          name="password"
+                          component="div"
+                          className="text-danger"
+                        />
+                      </div>
+                      <div>
+                        <button
+                          type="submit"
+                          className="btn btn-primary"
+                          disabled={isSubmitting}
+                        >
+                          Login
+                        </button>
+                      </div>
+                    </Form>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className={styles.row}>
-              <label htmlFor="password">Password</label>
-              <Field type="password" name="password" id="password" />
-              <ErrorMessage name="password" component="p" />
-            </div>
-            <div>
-              <button className={styles.btnsubmit} type="submit">
-                Login
-              </button>
-            </div>
-          </Form>
-        </main>
+          </main>
+        )}
       </Formik>
     </>
   );

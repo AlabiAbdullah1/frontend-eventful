@@ -1,15 +1,13 @@
-import styles from "./Login.module.css";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import PageNav from "../common/PageNav";
-import "react-toastify/dist/ReactToastify.css"; // Make sure to import the CSS
+import "react-toastify/dist/ReactToastify.css";
 import { login } from "../../api/axios";
 import Spinner from "../common/Spinner";
 
-// Define the validation schema outside the component to avoid re-creation on each render
 const loginSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email format")
@@ -26,7 +24,6 @@ const CreatorLogin = () => {
     mutationFn: async ({ email, password }) => {
       return await login(email, password);
     },
-
     onSuccess: (data, variables) => {
       localStorage.setItem("token", data.token);
       toast.success(`Welcome ${variables.email}`);
@@ -70,36 +67,58 @@ const CreatorLogin = () => {
         onSubmit={handleLogin}
       >
         {({ isSubmitting }) => (
-          <main className={styles.login}>
-            <Form className={styles.form}>
-              <div className={styles.row}>
-                <label htmlFor="email">Email address</label>
-                <Field type="email" name="email" id="email" />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className={styles.error}
-                />
+          <main className="container my-5">
+            <div className="row justify-content-center">
+              <div className="col-md-6">
+                <div className="card">
+                  <div className="card-body">
+                    <Form>
+                      <div className="mb-3">
+                        <label htmlFor="email" className="form-label">
+                          Email address
+                        </label>
+                        <Field
+                          type="email"
+                          name="email"
+                          id="email"
+                          className="form-control"
+                        />
+                        <ErrorMessage
+                          name="email"
+                          component="div"
+                          className="text-danger"
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="password" className="form-label">
+                          Password
+                        </label>
+                        <Field
+                          type="password"
+                          name="password"
+                          id="password"
+                          className="form-control"
+                        />
+                        <ErrorMessage
+                          name="password"
+                          component="div"
+                          className="text-danger"
+                        />
+                      </div>
+                      <div>
+                        <button
+                          type="submit"
+                          className="btn btn-primary"
+                          disabled={isSubmitting}
+                        >
+                          Login
+                        </button>
+                      </div>
+                    </Form>
+                  </div>
+                </div>
               </div>
-              <div className={styles.row}>
-                <label htmlFor="password">Password</label>
-                <Field type="password" name="password" id="password" />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className={styles.error}
-                />
-              </div>
-              <div>
-                <button
-                  className={styles.btnsubmit}
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  Login
-                </button>
-              </div>
-            </Form>
+            </div>
           </main>
         )}
       </Formik>
