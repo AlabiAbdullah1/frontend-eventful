@@ -75,7 +75,7 @@ const UserEvents = () => {
                   </Card.Text>
                   <div className="d-flex justify-content-end">
                     <FacebookShareButton
-                      url={`http://localhost:5173/events/${event._id}`}
+                      url={`https://eventful-zeta.vercel.app/events/${event._id}`}
                       quote={`I just got registered for the event ${
                         event.name
                       }, happening on ${new Date(
@@ -86,7 +86,7 @@ const UserEvents = () => {
                       <FacebookIcon size={32} round />
                     </FacebookShareButton>
                     <TwitterShareButton
-                      url={`http://localhost:5173/events/${event._id}`}
+                      url={`https://eventful-zeta.vercel.app/events/${event._id}`}
                       title={`I just got registered for the event ${
                         event.name
                       }, happening on ${new Date(
