@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { updateEvent, getEvent } from "../../api/axios";
@@ -14,8 +13,14 @@ const UpdateEvent = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       const data = await getEvent(id);
-      setEvent(data);
-      setFormData(data);
+
+      // Format the date to yyyy-MM-dd
+      const formattedDate = data.date
+        ? new Date(data.date).toISOString().slice(0, 10)
+        : "";
+
+      setEvent({ ...data, date: formattedDate });
+      setFormData({ ...data, date: formattedDate });
     };
 
     fetchEvent();
@@ -26,11 +31,15 @@ const UpdateEvent = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
-    await updateEvent(id, formData, token);
-    navigate("/creator-dashboard");
-    toast.success("event updated successfully");
+    try {
+      e.preventDefault();
+      const token = localStorage.getItem("token");
+      await updateEvent(id, formData, token);
+      navigate("/creator-dashboard");
+      toast.success("Event updated successfully");
+    } catch (error) {
+      toast.error("event date should not be in the past");
+    }
   };
 
   return (
@@ -48,7 +57,6 @@ const UpdateEvent = () => {
       />
       <h2>Update Event</h2>
       <Form onSubmit={handleSubmit}>
-        {/* Example form fields */}
         <Form.Group controlId="name">
           <Form.Label>Event Name</Form.Label>
           <Form.Control
@@ -70,6 +78,7 @@ const UpdateEvent = () => {
             required
           />
         </Form.Group>
+
         <Form.Group controlId="date">
           <Form.Label>Date</Form.Label>
           <Form.Control
@@ -80,8 +89,9 @@ const UpdateEvent = () => {
             required
           />
         </Form.Group>
+
         <Form.Group controlId="price">
-          <Form.Label>Event Name</Form.Label>
+          <Form.Label>Event Price</Form.Label>
           <Form.Control
             type="number"
             name="price"

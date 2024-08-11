@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signup } from "../../api/axios";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Make sure to import the CSS
+import "react-toastify/dist/ReactToastify.css"; // Ensure to import the CSS
 
 const CreatorSignupSchema = Yup.object().shape({
   name: Yup.string().required("Please enter your name"),
@@ -92,7 +92,7 @@ const CreatorSignupForm = ({ isSubmitting }) => (
           Signup
         </button>
         <p>
-          already a user? <Link to="/creator-login">Login</Link>
+          Already a user? <Link to="/creator-login">Login</Link>
         </p>
       </div>
     </Form>
@@ -107,10 +107,11 @@ const CreatorSignup = () => {
     mutationFn: signup,
     onSuccess: (data) => {
       queryClient.setQueryData("creator", data);
-      toast.success("creator's account created successfully!");
+      toast.success("Creator account created successfully!");
       navigate("/creator-login");
     },
     onError: (error) => {
+      toast.error("Email already in use");
       console.error("Signup failed:", error);
     },
   });
@@ -119,7 +120,7 @@ const CreatorSignup = () => {
     try {
       await mutation.mutateAsync(values);
     } catch (error) {
-      toast.error("email already in use");
+      console.error("Signup error:", error);
     } finally {
       setSubmitting(false);
     }
@@ -155,7 +156,7 @@ const CreatorSignup = () => {
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
-            <main className="container">
+            <main className="container my-5">
               <div className="card p-4">
                 <CreatorSignupForm isSubmitting={isSubmitting} />
               </div>

@@ -30,7 +30,7 @@ const CreatorLogin = () => {
       navigate("/creator-dashboard");
     },
     onError: (error) => {
-      toast.error("username or password incorrect");
+      toast.error("Username or password incorrect");
       console.error("Login error", error);
     },
   });
@@ -38,6 +38,7 @@ const CreatorLogin = () => {
   const handleLogin = async (values, { setSubmitting }) => {
     try {
       await mutation.mutateAsync(values);
+      toast.success("Login successful!");
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
@@ -45,14 +46,12 @@ const CreatorLogin = () => {
     }
   };
 
-  if (mutation.isLoading) return <Spinner />;
-
   return (
     <>
       <PageNav />
       <h2>Creator Login</h2>
       <ToastContainer
-        position="bottom-right"
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -112,11 +111,11 @@ const CreatorLogin = () => {
                           className="btn btn-primary"
                           disabled={isSubmitting}
                         >
-                          Login
+                          {isSubmitting ? <Spinner /> : "Login"}
                         </button>
                         <p>
-                          Does not have an account?{" "}
-                          <Link to="/creator-signup">Signup</Link>
+                          Don’t have an account?{" "}
+                          <Link to="/creator-signup">Sign up</Link>
                         </p>
                       </div>
                     </Form>

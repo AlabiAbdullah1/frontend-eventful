@@ -30,17 +30,21 @@ function EventeeLogin() {
       toast.success(`Welcome ${variables.email}`);
       navigate("/dashboard");
     },
-    onError: (error) => {
-      toast.error("username or password incorrect");
-      console.error("Login error", error);
+    onError: () => {
+      // console.error("Login error", error);
     },
   });
 
-  const handleLogin = async (values) => {
-    await mutation.mutateAsync(values);
+  const handleLogin = async (values, { setSubmitting }) => {
+    try {
+      await mutation.mutateAsync(values);
+      toast.success("Login successful");
+    } catch (error) {
+      toast.error("Username or password incorrect");
+    } finally {
+      setSubmitting(false);
+    }
   };
-
-  if (mutation.isLoading) return <Spinner />;
 
   return (
     <>
@@ -107,11 +111,11 @@ function EventeeLogin() {
                           className="btn btn-primary"
                           disabled={isSubmitting}
                         >
-                          Login
+                          {isSubmitting ? <Spinner /> : "Login"}
                         </button>
                         <p>
-                          Does not have an account?{" "}
-                          <Link to="/eventee-signup">signup</Link>
+                          Don’t have an account?{" "}
+                          <Link to="/eventee-signup">Sign up</Link>
                         </p>
                       </div>
                     </Form>

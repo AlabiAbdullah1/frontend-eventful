@@ -6,9 +6,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast, ToastContainer } from "react-toastify";
 import Spinner from "../common/Spinner";
 import { eventeesignup } from "../../api/axios";
-import "react-toastify/dist/ReactToastify.css"; // Make sure to import the CSS
+import "react-toastify/dist/ReactToastify.css";
 
-// Define the validation schema outside the component to avoid re-creation on each render
 const signupSchema = Yup.object().shape({
   name: Yup.string().required("Please enter your name"),
   email: Yup.string()
@@ -36,8 +35,8 @@ export default function EventeeSignup() {
       toast.success("Eventee's account created successfully!");
       navigate("/eventee-login");
     },
-    onError: (error) => {
-      console.error("Signup failed:", error.message);
+    onError: () => {
+      toast.error("Signup failed. Please try again.");
     },
   });
 
@@ -45,15 +44,13 @@ export default function EventeeSignup() {
     try {
       const { name, email, password, role } = values;
       await mutation.mutateAsync({ name, email, password, role });
-      setSubmitting(true);
+      setSubmitting(false);
     } catch (error) {
-      toast.error("email already in use");
+      toast.error("Email already in use");
     } finally {
       setSubmitting(false);
     }
   };
-
-  if (mutation.isLoading) return <Spinner />;
 
   return (
     <>
@@ -70,7 +67,7 @@ export default function EventeeSignup() {
           draggable
           pauseOnHover
         />
-        <h2 className="">Eventee Signup</h2> {/* Added Header */}
+        <h2>Eventee Signup</h2>
         <Formik
           initialValues={{
             name: "",
@@ -85,8 +82,6 @@ export default function EventeeSignup() {
           {({ isSubmitting }) => (
             <main className="container">
               <div className="card p-4" style={{ marginTop: "-50px" }}>
-                {" "}
-                {/* Moved Form Up */}
                 <Form>
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label">
@@ -176,7 +171,7 @@ export default function EventeeSignup() {
                       type="submit"
                       disabled={isSubmitting}
                     >
-                      Signup
+                      {isSubmitting ? <Spinner /> : "Signup"}
                     </button>
                     <p>
                       already a user? <Link to="/eventee-login">Login</Link>
