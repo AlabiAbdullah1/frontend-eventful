@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { createEvent } from "../../api/axios";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const CreateEvent = () => {
   const [name, setName] = useState("");
@@ -15,9 +16,10 @@ const CreateEvent = () => {
     try {
       const token = localStorage.getItem("token");
       await createEvent({ name, description, date, price }, token);
+      toast.success("event created successfully!");
       navigate("/creator-dashboard");
     } catch (error) {
-      console.error("Error creating event", error);
+      toast.error("event date should not be in the past");
     }
   };
 
