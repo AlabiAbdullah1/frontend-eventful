@@ -45,6 +45,7 @@ export default function EventeeSignup() {
     try {
       const { name, email, password, role } = values;
       await mutation.mutateAsync({ name, email, password, role });
+      setSubmitting(true);
     } catch (error) {
       toast.error("email already in use");
     } finally {
@@ -57,7 +58,7 @@ export default function EventeeSignup() {
   return (
     <>
       <PageNav />
-      <div className="bg-dark text-white vh-100 d-flex justify-content-center align-items-center">
+      <div className="bg-dark text-white vh-100 d-flex flex-column justify-content-center align-items-center">
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -69,6 +70,7 @@ export default function EventeeSignup() {
           draggable
           pauseOnHover
         />
+        <h2 className="mb-4 bg-light">Eventee Signup</h2> {/* Added Header */}
         <Formik
           initialValues={{
             name: "",
@@ -82,7 +84,9 @@ export default function EventeeSignup() {
         >
           {({ isSubmitting }) => (
             <main className="container">
-              <div className="card p-4">
+              <div className="card p-4" style={{ marginTop: "-50px" }}>
+                {" "}
+                {/* Moved Form Up */}
                 <Form>
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label">

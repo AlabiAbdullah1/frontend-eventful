@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://eventful-0ucd.onrender.com", // Adjust the base URL as needed
-  // baseURL: "http://localhost:8000",
+  // baseURL: "https://eventful-0ucd.onrender.com", // Adjust the base URL as needed
+  baseURL: "http://localhost:8000",
 });
 
 API.interceptors.request.use((req) => {
@@ -22,8 +22,8 @@ API.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-const API_URL = "https://eventful-0ucd.onrender.com";
-// const API_URL = "http://localhost:8000";
+// const API_URL = "https://eventful-0ucd.onrender.com";
+const API_URL = "http://localhost:8000";
 
 export const login = async (email, password) => {
   const response = await API.post(`${API_URL}/creator/login`, {

@@ -40,7 +40,7 @@ function EventeeLogin() {
     await mutation.mutateAsync(values);
   };
 
-  if (mutation.isPending) return <Spinner />;
+  if (mutation.isLoading) return <Spinner />;
 
   return (
     <>
@@ -56,6 +56,7 @@ function EventeeLogin() {
         draggable
         pauseOnHover
       />
+      <h1>Eventee Login</h1>
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={loginSchema}
