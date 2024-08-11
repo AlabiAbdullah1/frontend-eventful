@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import PageNav from "../common/PageNav";
 import Spinner from "../common/Spinner";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -23,69 +24,79 @@ const CreatorSignupSchema = Yup.object().shape({
 });
 
 const CreatorSignupForm = ({ isSubmitting }) => (
-  <Form>
-    <div className="mb-3">
-      <label htmlFor="name" className="form-label">
-        Name
-      </label>
-      <Field type="text" id="name" name="name" className="form-control" />
-      <ErrorMessage name="name" component="div" className="text-danger" />
-    </div>
-    <div className="mb-3">
-      <label htmlFor="email" className="form-label">
-        Email address
-      </label>
-      <Field type="email" id="email" name="email" className="form-control" />
-      <ErrorMessage name="email" component="div" className="text-danger" />
-    </div>
-    <div className="mb-3">
-      <label htmlFor="role" className="form-label">
-        Role
-      </label>
-      <Field
-        type="text"
-        id="role"
-        name="role"
-        value="creator"
-        readOnly
-        className="form-control"
-      />
-      <ErrorMessage name="role" component="div" className="text-danger" />
-    </div>
-    <div className="mb-3">
-      <label htmlFor="password" className="form-label">
-        Password
-      </label>
-      <Field
-        type="password"
-        id="password"
-        name="password"
-        className="form-control"
-      />
-      <ErrorMessage name="password" component="div" className="text-danger" />
-    </div>
-    <div className="mb-3">
-      <label htmlFor="confirmPassword" className="form-label">
-        Confirm Password
-      </label>
-      <Field
-        type="password"
-        id="confirmPassword"
-        name="confirmPassword"
-        className="form-control"
-      />
-      <ErrorMessage
-        name="confirmPassword"
-        component="p"
-        className="text-danger"
-      />
-    </div>
-    <div>
-      <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
-        Signup
-      </button>
-    </div>
-  </Form>
+  <>
+    <h2>Creator Signup</h2>
+    <Form>
+      <div className="mb-3">
+        <label htmlFor="name" className="form-label">
+          Name
+        </label>
+        <Field type="text" id="name" name="name" className="form-control" />
+        <ErrorMessage name="name" component="div" className="text-danger" />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">
+          Email address
+        </label>
+        <Field type="email" id="email" name="email" className="form-control" />
+        <ErrorMessage name="email" component="div" className="text-danger" />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="role" className="form-label">
+          Role
+        </label>
+        <Field
+          type="text"
+          id="role"
+          name="role"
+          value="creator"
+          readOnly
+          className="form-control"
+        />
+        <ErrorMessage name="role" component="div" className="text-danger" />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="password" className="form-label">
+          Password
+        </label>
+        <Field
+          type="password"
+          id="password"
+          name="password"
+          className="form-control"
+        />
+        <ErrorMessage name="password" component="div" className="text-danger" />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="confirmPassword" className="form-label">
+          Confirm Password
+        </label>
+        <Field
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          className="form-control"
+        />
+        <ErrorMessage
+          name="confirmPassword"
+          component="p"
+          className="text-danger"
+        />
+      </div>
+      <div className="d-flex justify-content-between">
+        <button
+          className="btn btn-primary"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          Signup
+        </button>
+        <p>
+          already a user? <Link to="/creator-login">Login</Link>
+        </p>
+      </div>
+    </Form>
+  </>
 );
 
 const CreatorSignup = () => {
@@ -119,6 +130,7 @@ const CreatorSignup = () => {
   return (
     <>
       <PageNav />
+
       <div className="bg-dark text-white vh-100 d-flex justify-content-center align-items-center">
         <ToastContainer
           position="top-right"

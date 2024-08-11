@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -101,7 +101,7 @@ function EventeeLogin() {
                           className="text-danger"
                         />
                       </div>
-                      <div>
+                      <div className="d-flex justify-content-between">
                         <button
                           type="submit"
                           className="btn btn-primary"
@@ -109,6 +109,10 @@ function EventeeLogin() {
                         >
                           Login
                         </button>
+                        <p>
+                          Does not have an account?{" "}
+                          <Link to="/eventee-signup">signup</Link>
+                        </p>
                       </div>
                     </Form>
                   </div>

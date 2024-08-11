@@ -14,6 +14,7 @@ import CreatorDashboard from "./components/Creator/CreatorDashboard";
 import Dashboard from "./components/User/Dashboard";
 import Analytics from "./components/Creator/Analytic";
 import PageNotFound from "./components/common/PageNotFound";
+import UpdateEvent from "./components/Creator/updateEvent";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="creator-dashboard" element={<CreatorDashboard />} />
         <Route path="/events/create" element={<CreateEvent />} />
+        <Route path="/events/update/:id" element={<UpdateEvent />} />
         <Route path="/events" element={<EventList />} />
         <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/user/events" element={<UserEvents />} />

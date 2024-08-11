@@ -1,5 +1,5 @@
 import PageNav from "../common/PageNav";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -70,7 +70,7 @@ export default function EventeeSignup() {
           draggable
           pauseOnHover
         />
-        <h2 className="mb-4 bg-light">Eventee Signup</h2> {/* Added Header */}
+        <h2 className="">Eventee Signup</h2> {/* Added Header */}
         <Formik
           initialValues={{
             name: "",
@@ -170,7 +170,7 @@ export default function EventeeSignup() {
                       className="text-danger"
                     />
                   </div>
-                  <div>
+                  <div className="d-flex justify-content-between">
                     <button
                       className="btn btn-primary"
                       type="submit"
@@ -178,6 +178,9 @@ export default function EventeeSignup() {
                     >
                       Signup
                     </button>
+                    <p>
+                      already a user? <Link to="/eventee-login">Login</Link>
+                    </p>
                   </div>
                 </Form>
               </div>

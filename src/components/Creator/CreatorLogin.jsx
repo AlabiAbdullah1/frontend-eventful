@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -50,6 +50,7 @@ const CreatorLogin = () => {
   return (
     <>
       <PageNav />
+      <h2>Creator Login</h2>
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
@@ -105,7 +106,7 @@ const CreatorLogin = () => {
                           className="text-danger"
                         />
                       </div>
-                      <div>
+                      <div className="d-flex justify-content-between">
                         <button
                           type="submit"
                           className="btn btn-primary"
@@ -113,6 +114,10 @@ const CreatorLogin = () => {
                         >
                           Login
                         </button>
+                        <p>
+                          Does not have an account?{" "}
+                          <Link to="/creator-signup">Signup</Link>
+                        </p>
                       </div>
                     </Form>
                   </div>
