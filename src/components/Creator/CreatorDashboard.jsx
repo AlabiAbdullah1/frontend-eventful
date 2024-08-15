@@ -57,8 +57,8 @@ const CreatorDashboard = () => {
       <Card className="mb-4">
         <Card.Body>
           <Link to={`/user/analytic`} className="text-decoration-none">
-            <Card.Title>{event.name}</Card.Title>
-            <Card.Text>{event.description}</Card.Text>
+            <Card.Title>Event Name: {event.name}</Card.Title>
+            <Card.Text>Description: {event.description}</Card.Text>
             <Card.Text>Status: {event.status}</Card.Text>
             <Card.Text>
               Date: {new Date(event.date).toLocaleDateString()}
