@@ -9,10 +9,12 @@ import {
   TwitterIcon,
 } from "react-share";
 import { toast, ToastContainer } from "react-toastify";
+import Spinner from "../common/Spinner";
 
 const CreatorDashboard = () => {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const fetchUserEvents = useCallback(async () => {
@@ -31,6 +33,7 @@ const CreatorDashboard = () => {
   }, [fetchUserEvents]);
 
   const handleDelete = async (eventId) => {
+    setIsSubmitting(true);
     try {
       const token = localStorage.getItem("token");
       await deleteEvent(eventId, token);
@@ -40,6 +43,8 @@ const CreatorDashboard = () => {
       toast.success("event deleted successfully");
     } catch (error) {
       setError(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -64,8 +69,12 @@ const CreatorDashboard = () => {
             <Button variant="primary" onClick={() => handleUpdate(event._id)}>
               Update
             </Button>
-            <Button variant="danger" onClick={() => handleDelete(event._id)}>
-              Delete
+            <Button
+              disabled={isSubmitting}
+              variant="danger"
+              onClick={() => handleDelete(event._id)}
+            >
+              {isSubmitting ? <Spinner /> : "Delete"}
             </Button>
           </div>
           <div className="d-flex justify-content-end mt-2">

@@ -3,11 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import { updateEvent, getEvent } from "../../api/axios";
 import { Form, Button } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
+import Spinner from "../common/Spinner";
 
 const UpdateEvent = () => {
   const { id } = useParams();
   const [event, setEvent] = useState({});
   const [formData, setFormData] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,14 +33,18 @@ const UpdateEvent = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
     try {
-      e.preventDefault();
       const token = localStorage.getItem("token");
       await updateEvent(id, formData, token);
-      navigate("/creator-dashboard");
       toast.success("Event updated successfully");
+      navigate("/creator-dashboard");
     } catch (error) {
-      toast.error("event date should not be in the past");
+      toast.error("Event date should not be in the past");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -101,8 +107,8 @@ const UpdateEvent = () => {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Update Event
+        <Button disabled={isSubmitting} variant="primary" type="submit">
+          {isSubmitting ? <Spinner /> : "Update Event"}
         </Button>
       </Form>
     </div>

@@ -89,7 +89,7 @@ const CreatorSignupForm = ({ isSubmitting }) => (
           type="submit"
           disabled={isSubmitting}
         >
-          Signup
+          {isSubmitting ? <Spinner /> : "Signup"}
         </button>
         <p>
           Already a user? <Link to="/creator-login">Login</Link>

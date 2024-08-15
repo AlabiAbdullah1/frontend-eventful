@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
-import { getUserEvents } from "../../api/axios";
-import { Card, Button } from "react-bootstrap";
+import { getUserEvents, setReminder } from "../../api/axios";
+import { Card, Button, Form, Modal } from "react-bootstrap";
 import {
   FacebookShareButton,
   TwitterShareButton,
   FacebookIcon,
   TwitterIcon,
 } from "react-share";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Spinner from "../common/Spinner";
 
+// Retrieves event ID from URL
+
 const UserEvents = () => {
+  const { id } = useParams();
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
-  const [qrCode, setqrCode] = useState("");
+  const [qrCode, setQrCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showReminderForm, setShowReminderForm] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [reminderDate, setReminderDate] = useState("");
 
   useEffect(() => {
     const fetchUserEvents = async () => {
@@ -23,7 +29,7 @@ const UserEvents = () => {
         const data = await getUserEvents(token);
         setEvents(data.message);
         setIsLoading(true);
-        setqrCode(data.qrCode);
+        setQrCode(data.qrCode);
         setError(null);
       } catch (error) {
         setError(error.message);
@@ -34,6 +40,34 @@ const UserEvents = () => {
 
     fetchUserEvents();
   }, []);
+
+  const handleShowReminderForm = (eventId) => {
+    setSelectedEventId(eventId);
+    setShowReminderForm(true);
+  };
+
+  const handleCloseReminderForm = () => {
+    setShowReminderForm(false);
+    setReminderDate("");
+  };
+
+  const handleSubmitReminder = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      console.log("Event ID:", selectedEventId); // Log event ID
+      console.log("Reminder Date:", reminderDate);
+
+      const response = await setReminder(selectedEventId, reminderDate, token); // Use the selected event ID
+      console.log("Response from API:", response);
+
+      alert("Reminder set successfully!");
+      handleCloseReminderForm();
+    } catch (error) {
+      console.error("Error setting reminder:", error);
+      alert("Failed to set reminder.");
+    }
+  };
 
   if (isLoading) return <Spinner />;
 
@@ -73,29 +107,37 @@ const UserEvents = () => {
                   <Card.Text className="text-center">
                     Scan me to get this event details
                   </Card.Text>
-                  <div className="d-flex justify-content-end">
-                    <FacebookShareButton
-                      url={`https://eventful-zeta.vercel.app/events/${event._id}`}
-                      quote={`I just got registered for the event ${
-                        event.name
-                      }, happening on ${new Date(
-                        event.date
-                      )}. You can check it out also`}
-                      hashtag="#EventShare"
+                  <div className="d-flex align-items-center justify-content-between">
+                    <Button
+                      className="me-2"
+                      onClick={() => handleShowReminderForm(event._id)} // Set the event ID for reminder
                     >
-                      <FacebookIcon size={32} round />
-                    </FacebookShareButton>
-                    <TwitterShareButton
-                      url={`https://eventful-zeta.vercel.app/events/${event._id}`}
-                      title={`I just got registered for the event ${
-                        event.name
-                      }, happening on ${new Date(
-                        event.date
-                      )}. You can check it out also`}
-                      hashtags={["Eventful"]}
-                    >
-                      <TwitterIcon size={32} round />
-                    </TwitterShareButton>
+                      Set Reminder
+                    </Button>
+                    <div className="d-flex">
+                      <FacebookShareButton
+                        url={`https://eventful-zeta.vercel.app/events/${event._id}`}
+                        quote={`I just got registered for the event ${
+                          event.name
+                        }, happening on ${new Date(
+                          event.date
+                        )}. You can check it out also`}
+                        hashtag="#EventShare"
+                      >
+                        <FacebookIcon size={32} round />
+                      </FacebookShareButton>
+                      <TwitterShareButton
+                        url={`https://eventful-zeta.vercel.app/events/${event._id}`}
+                        title={`I just got registered for the event ${
+                          event.name
+                        }, happening on ${new Date(
+                          event.date
+                        )}. You can check it out also`}
+                        hashtags={["Eventful"]}
+                      >
+                        <TwitterIcon size={32} round />
+                      </TwitterShareButton>
+                    </div>
                   </div>
                 </Card.Body>
               </Card>
@@ -108,6 +150,29 @@ const UserEvents = () => {
           and sign up for an event
         </h5>
       )}
+
+      {/* Reminder Form Modal */}
+      <Modal show={showReminderForm} onHide={handleCloseReminderForm}>
+        <Modal.Header closeButton>
+          <Modal.Title>Set Reminder</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmitReminder}>
+            <Form.Group controlId="formReminderDate">
+              <Form.Label>Reminder Date</Form.Label>
+              <Form.Control
+                type="date"
+                value={reminderDate}
+                onChange={(e) => setReminderDate(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Set Reminder
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

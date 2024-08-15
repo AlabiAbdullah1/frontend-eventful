@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getEvent, joinEvent } from "../../api/axios";
@@ -10,6 +11,7 @@ const EventDetail = () => {
   const [event, setEvent] = useState({});
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,17 +32,17 @@ const EventDetail = () => {
   }, [id]);
 
   const handleJoin = async () => {
+    setIsSubmitting(true);
     try {
       const token = localStorage.getItem("token");
       await joinEvent(id);
       navigate("/user/events");
     } catch (error) {
       toast.error("You are already an attendee for this event");
-      console.error("Error joining event", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
-  if (isLoading) return <Spinner />;
 
   return (
     <div className="container mt-5">
@@ -77,8 +79,12 @@ const EventDetail = () => {
               Event Date: {new Date(event.date).toLocaleDateString()}
             </Card.Text>
             <Card.Text>Price: ${event.price}</Card.Text>
-            <Button variant="primary" onClick={handleJoin}>
-              Join Event
+            <Button
+              disabled={isSubmitting}
+              variant="primary"
+              onClick={handleJoin}
+            >
+              {isSubmitting ? <Spinner /> : "Join Event"}
             </Button>
           </Card.Body>
         </Card>
