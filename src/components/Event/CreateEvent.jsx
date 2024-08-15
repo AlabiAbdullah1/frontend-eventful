@@ -3,6 +3,7 @@ import { createEvent } from "../../api/axios";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import Spinner from "../common/Spinner";
 
 const CreateEvent = () => {
   const [name, setName] = useState("");
@@ -10,8 +11,11 @@ const CreateEvent = () => {
   const [date, setDate] = useState("");
   const [price, setPrice] = useState("");
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
+
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
@@ -67,7 +71,7 @@ const CreateEvent = () => {
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          Create Event
+          {isLoading ? <Spinner /> : "Create Event"}
         </Button>
       </Form>
     </div>
