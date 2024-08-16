@@ -15,6 +15,7 @@ import Dashboard from "./components/User/Dashboard";
 import Analytics from "./components/Creator/Analytic";
 import PageNotFound from "./components/common/PageNotFound";
 import UpdateEvent from "./components/Creator/updateEvent";
+import EventMainDetail from "./components/Event/EventMainDetail";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/user/events" element={<UserEvents />} />
         <Route path="/user/analytic" element={<Analytics />} />
+        <Route path="/events-detail/:id" element={<EventMainDetail />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>

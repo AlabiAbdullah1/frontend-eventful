@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://eventful-0ucd.onrender.com",
-  // baseURL: "http://localhost:8000",
+  // baseURL: "https://eventful-0ucd.onrender.com",
+  baseURL: "http://localhost:8000",
 });
 
 API.interceptors.request.use((req) => {
@@ -22,8 +22,8 @@ API.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-const API_URL = "https://eventful-0ucd.onrender.com";
-// const API_URL = "http://localhost:8000";
+// const API_URL = "https://eventful-0ucd.onrender.com";
+const API_URL = "http://localhost:8000";
 
 export const login = async (email, password) => {
   const response = await API.post(`${API_URL}/creator/login`, {
@@ -136,17 +136,15 @@ export const deleteEvent = async (eventId, token) => {
 };
 
 export const setReminder = async (eventId, date, token) => {
-  console.log("Sending Event ID:", eventId); // Debugging line
-  console.log("Sending Date:", date); // Debugging line
   const response = await axios.post(
     `${API_URL}/user/set-reminder/${eventId}`,
-    { date }, // Send date as an object
+    { date },
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     }
   );
-  console.log(response);
+
   return response;
 };
