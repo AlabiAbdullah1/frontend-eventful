@@ -79,14 +79,14 @@ const CreatorDashboard = () => {
           </div>
           <div className="d-flex justify-content-end mt-2">
             <FacebookShareButton
-              url={`http://eventful-zeta.vercel.app/${event._id}`}
+              url={`https://eventful-zeta.vercel.app/events-detail/${event._id}`}
               quote={`Check out this event: ${event.name}`}
               hashtag="#EventShare"
             >
               <FacebookIcon size={32} round />
             </FacebookShareButton>
             <TwitterShareButton
-              url={`https://eventful-zeta.vercel.app/events/${event._id}`}
+              url={`https://eventful-zeta.vercel.app/events-detail/${event._id}`}
               title={`Check out this event: ${event.name}`}
               hashtags={["EventShare"]}
             >

@@ -116,7 +116,7 @@ const UserEvents = () => {
                     </Button>
                     <div className="d-flex">
                       <FacebookShareButton
-                        url={`https://eventful-zeta.vercel.app/events/${event._id}`}
+                        url={`https://eventful-zeta.vercel.app/events-detail/${event._id}`}
                         quote={`I just got registered for the event ${
                           event.name
                         }, happening on ${new Date(
@@ -127,7 +127,7 @@ const UserEvents = () => {
                         <FacebookIcon size={32} round />
                       </FacebookShareButton>
                       <TwitterShareButton
-                        url={`https://eventful-zeta.vercel.app/events/${event._id}`}
+                        url={`https://eventful-zeta.vercel.app/events-detail/${event._id}`}
                         title={`I just got registered for the event ${
                           event.name
                         }, happening on ${new Date(
