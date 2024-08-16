@@ -60,7 +60,6 @@ const Dashboard = () => {
                         {new Date(event.date).toLocaleDateString()}
                       </Card.Text>
                       <Card.Text>Price: ${event.price}</Card.Text>
-                      <Card.Text>Creator Name: {event.creatorName}</Card.Text>
                     </Card.Body>
                   </Card>
                 </Link>
