@@ -62,8 +62,11 @@ const EventMainDetail = () => {
             </Card.Body>
           </Card>
           <h3>
-            Please register <Link to="/eventee-signup">here</Link> to join the
-            event <b>{event.name}</b>
+            Please register{" "}
+            <Link to="/eventee-signup" className="text-decoration-none">
+              here
+            </Link>{" "}
+            to join the event <b>{event.name}</b>
           </h3>
         </>
       )}
