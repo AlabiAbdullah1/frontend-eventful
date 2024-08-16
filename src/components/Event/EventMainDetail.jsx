@@ -31,19 +31,6 @@ const EventMainDetail = () => {
     fetchEvent();
   }, [id]);
 
-  const handleJoin = async () => {
-    setIsSubmitting(true);
-    try {
-      const token = localStorage.getItem("token");
-      await joinEvent(id);
-      navigate("/user/events");
-    } catch (error) {
-      toast.error("You are already an attendee for this event");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="container mt-5">
       <ToastContainer
